@@ -1,0 +1,113 @@
+/* General styles for the Job Cards Page */
+.job-cards-page-Hero {
+ 
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 20px;
+    width: 100%;
+   
+   /* Ensure the page takes full height */
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    
+  }
+  
+  /* Job Cards Section Styling */
+  .job-cards-Hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 40%; /* Adjusted height for the card container */
+    width: 100%;
+    overflow: hidden;
+   
+  }
+
+  
+  .job-card-Hero {
+    transition: transform 1s ease, filter 1s ease, opacity 1s ease;
+    width: 20%; /* Default width for left and right cards */
+    height: 60%; /* Ensure all cards have same height */
+    opacity: 0.5; /* Side cards are slightly transparent */
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 5px; /* Spacing between cards */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .center-card-Hero {
+    width: 60%; /* Center card takes 60% of the screen width */
+    transform: scale(1.1); /* Slight zoom effect on the center card */
+    opacity: 1; /* Center card is fully visible */
+    filter: none; /* No blur on the center card */
+   z-index: 1;
+   
+
+   
+   
+ 
+  }
+  
+  .side-card-hero {
+    opacity: 0.7; /* Blurred effect */
+    filter: blur(2500px); /* Blurred effect on side cards */
+   
+  }
+  
+  /* Apply Now Button Styling */
+  .job-card-Hero .apply-button-Hero {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: auto; /* This ensures the button stays at the bottom */
+  }
+  
+  .job-card-Hero .apply-button-hero :hover {
+    background-color: #0056b3;
+  }
+
+ 
+  @media screen and (max-width: 600px) {
+    /* Apply the sliding effect */
+    .job-cards-Hero {
+        flex-direction: row; /* Keep the cards horizontal */
+        justify-content: flex-start; /* Align cards to left */
+        height: 100%; /* Adjust for 3 cards on screen */
+      flex-basis: content;
+    }
+
+    .job-card-Hero {
+        width: 15%; /* Width set to 33.33% so 3 cards fit */
+        margin: 0 5px;
+        height: 100%;
+    }
+
+    .center-card-Hero {
+        width: 80%; /* Center card takes 60% of the screen width */
+    }
+
+    .side-card-Hero {
+        opacity: 0.5;
+        filter: blur(2px); /* Less blur for side cards on mobile */
+    }
+
+    .job-card-Hero .apply-button-Hero {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+    }
+}

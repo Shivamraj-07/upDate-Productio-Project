@@ -9,12 +9,15 @@ import FeaturesSection from "../LandingPage/FeaturesSection";
 import JobCategories from "../LandingPage/JobCategories";
 import Footersection from "../LandingPage/FooterSection";
 import ChatBot from "../components/ChatBot";
+import HeroPage from "../LandingPage/HeroPage";
 
 const LandingPage = () => {
   return (
     <>
+    
       <NavBar />
       <WelcomeSection />
+      <HeroPage/>
       <SectionService />
       <JobRolesSection />
       <MarqueeSection />

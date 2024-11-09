@@ -63,7 +63,7 @@ const MarketPlace = () => {
             placeholder="Search jobs by skill or title..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full max-w-xl px-4 py-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="w-full max-w-xl px-4 py-3 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all gap-10"
           />
           <button
             type="submit"
