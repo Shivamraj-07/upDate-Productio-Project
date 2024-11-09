@@ -1,0 +1,29 @@
+/* Resume.css */
+
+@keyframes shake-jump {
+    0%, 100% {
+      transform: translateY(0) rotate(0);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    20% {
+      transform: translateY(-5px) rotate(-3deg);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    }
+    40% {
+      transform: translateY(0) rotate(3deg);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    60% {
+      transform: translateY(-5px) rotate(-3deg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    80% {
+      transform: translateY(0) rotate(3deg);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  .animate-shake-jump {
+    animation: shake-jump 1s ease-in-out infinite;
+  }
+  
