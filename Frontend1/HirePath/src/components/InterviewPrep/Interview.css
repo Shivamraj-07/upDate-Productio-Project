@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    
+}
+
+.gari_header {
+   margin-top: -100px;
+    background-color: red;
+    /* color: #fff; */
+    color: black;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+#searchInput {
+    width: 80%;
+    padding: 10px;
+    margin: 20px auto;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+
+.garima_h {
+    font-size: 2.0em;
+    
+}
+
+.main_gari {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#domains {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.garima_h {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+   
+}
+
+/* h2 {
+    color: #444;
+    margin-bottom: 8px;
+} */
+
+.my_para_gari {
+    margin-bottom: 12px;
+}
+
+.ul_gari {
+    list-style: inside disc;
+}
+
+.my_li_gari {
+    margin: 5px 0;
+}
+
+
+

@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4b79a1, #283e51);
+  animation: backgroundAnimation 8s infinite alternate;
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    background: #4b79a1;
+  }
+  100% {
+    background: #283e51;
+  }
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  animation: scaleIn 0.8s ease forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* my underline animation */
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-title::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 0;
+  height: 3px;
+  background-color: #4b79a1;
+  transition: width 0.5s ease, left 0.5s ease;
+  transform: translateX(-50%);
+}
+
+.form-title:hover::after {
+  width: 80%;
+  left: 50%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+label {
+  font-size: 13px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+input,
+select,
+textarea {
+  padding: 8px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #4b79a1;
+  box-shadow: 0 0 8px rgba(75, 121, 161, 0.4);
+}
+
+/* btn css */
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  color: #fff;
+  background-color: #4b79a1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  animation: btnFadeIn 1.2s forwards;
+  margin-top: 10px;
+}
+
+@keyframes btnFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.submit-btn:hover {
+  background-color: #354c5c;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 100%;
+    margin: 10px;
+  }
+}
