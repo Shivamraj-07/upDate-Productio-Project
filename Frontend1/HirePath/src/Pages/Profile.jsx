@@ -33,6 +33,7 @@ useEffect(() => {
       setEducations(education);
       setExperiences(experiences);
       setWhoIAm(WhoIAm);
+    
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error('Failed to fetch user data. Please refresh the page.');
@@ -52,7 +53,7 @@ useEffect(() => {
        WhoIAm: whoIAm,
      };
  
-     const response = await axios.patch(
+     const response = await axios.put(
        `${import.meta.env.VITE_API_URL}/Profile/edit`,
        updatedData,
        { withCredentials: true }
@@ -60,7 +61,6 @@ useEffect(() => {
  
      if (response.status === 200) {
        setIsModalOpen(false);
-       toast.success('Profile updated successfully!');
        
        // Update the local state with the response data
        const { name, email, skills, ProfileURL, BgURL, WhoIAm } = response.data;
@@ -70,6 +70,8 @@ useEffect(() => {
        setProfileImage(ProfileURL);
        setBackgroundImage(BgURL);
        setWhoIAm(WhoIAm);
+       window.location.reload();
+       toast.success('Profile updated successfully!');
      } else {
        throw new Error('Failed to update profile');
      }

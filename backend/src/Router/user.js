@@ -37,17 +37,17 @@ UserRouter.get("/MarketPlace", IsAuthenticated, async (req, res) => {
 });
 
 
-UserRouter.patch("/Profile/edit", IsAuthenticated,async(req, res) => {
+UserRouter.put("/Profile/edit",IsAuthenticated ,async(req, res) => {
   try {
     const userUpdates = req.body;
-    const allowedUpdates = ["name", "skills", "ProfileURL", "BgURL","Education", "Experince"];
+    // const allowedUpdates = ["name", "skills", "ProfileURL", "BgURL","Education", "Experince"];
  
   
     // Check if all keys in the update are allowed
-    const isAllowed = Object.keys(userUpdates).every(key => allowedUpdates.includes(key));
-    if (!isAllowed) {
-      return res.status(400).json({ message: "Invalid update keys provided." });
-    }
+    // const isAllowed = Object.keys(userUpdates).every(key => allowedUpdates.includes(key));
+    // if (!isAllowed) {
+    //   return res.status(400).json({ message: "Invalid update keys provided." });
+    // }
   
     // Check if ProfileURL or BgURL size exceeds the allowed limit
   
@@ -59,7 +59,7 @@ UserRouter.patch("/Profile/edit", IsAuthenticated,async(req, res) => {
         runValidators: true,
       }
     );
-    return res.json("success")
+    return res.status(200).json({ message: 'Request was successful'})
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: "An error occurred while updating the profile." });
