@@ -34,33 +34,35 @@ const JobSection = () => {
 
   useEffect(() => {
     let filtered = jobs;
-
+  
     if (searchQuery) {
       filtered = filtered.filter((job) =>
         job.vacancyTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
         job.companyName.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
-
+  
     if (selectedWorkType) {
       filtered = filtered.filter((job) => job.workType === selectedWorkType);
     }
-
+  
     if (selectedLocation) {
-      filtered = filtered.filter((job) => job.location.toLowerCase() === selectedLocation.toLowerCase());
+      filtered = filtered.filter((job) =>
+        job.location.toLowerCase().trim().includes(selectedLocation.toLowerCase().trim())
+      );
     }
-
+  
     if (jobType) {
       filtered = filtered.filter((job) => job.jobType === jobType);
     }
-
+  
     if (minSalary) {
       filtered = filtered.filter((job) => parseFloat(job.salary || 0) >= parseFloat(minSalary));
     }
-
+  
     setFilteredJobs(filtered);
   }, [searchQuery, selectedWorkType, selectedLocation, jobType, minSalary, jobs]);
-
+  
   const handleApply = (googleFormLink) => {
     if (googleFormLink) {
       window.open(googleFormLink, "_blank");
