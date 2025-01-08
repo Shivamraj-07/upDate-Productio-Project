@@ -184,6 +184,7 @@ const JobSection = () => {
                 <p className="text-gray-800 mb-4">
                   <strong>Experience Level:</strong> {job.experienceLevel}
                 </p>
+               
                 <button
                   className="bg-red-600 text-white py-2 px-4 rounded-full hover:bg-red-700 w-full transition-colors duration-300"
                   onClick={() => handleApply(job.googleFormLink)}

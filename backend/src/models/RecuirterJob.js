@@ -13,6 +13,8 @@ const jobSchema = new mongoose.Schema({
   experienceRequirement: { type: String, required: false },
   googleFormLink: { type: String, required: false }, // Added for Google Form Link
   salary: { type: String, required: false }, // Added for Salary
+  email: { type: String, required: false }, // Added for Salary
+  
 });
 
 const Job = mongoose.model("Job", jobSchema);

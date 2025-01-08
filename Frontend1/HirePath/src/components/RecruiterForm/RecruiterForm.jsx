@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 
 import {
@@ -14,11 +15,13 @@ import {
   FaStar,
   FaDollarSign,
   FaLink,
+  FaEnvelope,
 } from "react-icons/fa";
 
 const RecruiterForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
+    email: "", // Email field
     companyName: "",
     vacancyTitle: "",
     location: "",
@@ -34,6 +37,25 @@ const RecruiterForm = () => {
     
   });
   const [isFormOpen, setIsFormOpen] = useState(true); // State to control form visibility
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/Profile`,
+          { withCredentials: true }
+        );
+        const { email } = response.data;
+        setFormData((prev) => ({ ...prev, email })); // Set email in formData
+      } catch (error) {
+        console.error("Error fetching user email:", error);
+        alert("Failed to fetch user email. Please try again.");
+      }
+    };
+
+    fetchEmail();
+  }, []);
+
 
   // Lock background scrolling when the modal is open
   useEffect(() => {
@@ -83,6 +105,7 @@ const RecruiterForm = () => {
   const handleReset = () => {
     setIsSubmitted(false);
     setFormData({
+      email: formData.email, // Preserve the fetched email
       companyName: "",
       vacancyTitle: "",
       location: "",
@@ -287,6 +310,26 @@ const RecruiterForm = () => {
                           <option value="Experienced">Experienced</option>
                           <option value="Both">Both</option>
                         </select>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-2xl text-blue-500">
+                        <FaEnvelope />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <label
+                          htmlFor="email"
+                          className="text-sm font-semibold text-gray-700"
+                        >
+                          Email
+                        </label>
+                        <input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          disabled
+                          className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                        />
                       </div>
                     </div>
 

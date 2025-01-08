@@ -48,6 +48,7 @@ const AdminPanel = () => {
               <p>Location: {job.location}</p>
               <p>Skills: {job.skillRequired}</p>
               <p>Salary: {job.salary || "Not disclosed"}</p>
+              <p>Email: {job.email}</p>
               <button
                 onClick={() => handleDelete(job._id)}
                 className="bg-red-600 text-white py-1 px-3 rounded mr-3"
@@ -63,3 +64,4 @@ const AdminPanel = () => {
 };
 
 export default AdminPanel;
+
