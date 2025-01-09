@@ -206,7 +206,7 @@ const handleExperienceSave = async () => {
           </div>
 
           {/* 3-Column Grid Layout */}
-          
+          {whoIAm === 'jobseeker' ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 p-4">
             {/* First Column: Profile */}
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -313,6 +313,10 @@ const handleExperienceSave = async () => {
               </div>
             </div>
           </div>
+
+          ) : (
+            <div></div>
+          )}
 
 
           {/* Modal Component */}
