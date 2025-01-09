@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from "../components/popUp";
+import EduModal from "../components/EductionPopUp";
+import ExpModal from "../components/ExpPopUp"
 import NavBar from "../LandingPage/NavBar";
 
 const Profile = () => {
@@ -12,10 +14,14 @@ const Profile = () => {
   const [profileImage, setProfileImage] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEduOpen, setIsEduModalOpen] = useState(false);
+  const [isModalExpOpen, setIsExpModalOpen] = useState(false);
   const [whoIAm, setWhoIAm] = useState("");
-  const [educations, setEducations] = useState([]);
-  const [experiences, setExperiences] = useState([]);
-  const [editingExperience, setEditingExperience] = useState(null);
+  const [institution, setInstitution] = useState([]);
+  const [degree, setDegree] = useState([]);
+  const [company, setCompany] = useState([]);
+  const [experience_Year , setExperience_Year] = useState("")
+
 
 useEffect(() => {
   const fetchUserData = async () => {
@@ -24,15 +30,19 @@ useEffect(() => {
         `${import.meta.env.VITE_API_URL}/Profile`,
         { withCredentials: true }
       );
-      const { name, email, skills, ProfileURL, BgURL, WhoIAm, education, experiences } = response.data;
+      const { name, email, skills, ProfileURL, BgURL, WhoIAm, institution , degree, company,experience_Year  } = response.data;
       setName(name);
       setEmail(email);
       setSkills(skills);
       setProfileImage(ProfileURL);
       setBackgroundImage(BgURL);
-      setEducations(education);
-      setExperiences(experiences);
       setWhoIAm(WhoIAm);
+      setInstitution(institution)
+      setDegree(degree)
+      setCompany(company)
+      setExperience_Year(experience_Year)
+      
+    
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error('Failed to fetch user data. Please refresh the page.');
@@ -52,7 +62,7 @@ useEffect(() => {
        WhoIAm: whoIAm,
      };
  
-     const response = await axios.patch(
+     const response = await axios.put(
        `${import.meta.env.VITE_API_URL}/Profile/edit`,
        updatedData,
        { withCredentials: true }
@@ -60,7 +70,6 @@ useEffect(() => {
  
      if (response.status === 200) {
        setIsModalOpen(false);
-       toast.success('Profile updated successfully!');
        
        // Update the local state with the response data
        const { name, email, skills, ProfileURL, BgURL, WhoIAm } = response.data;
@@ -70,6 +79,8 @@ useEffect(() => {
        setProfileImage(ProfileURL);
        setBackgroundImage(BgURL);
        setWhoIAm(WhoIAm);
+       window.location.reload();
+       toast.success('Profile updated successfully!');
      } else {
        throw new Error('Failed to update profile');
      }
@@ -81,82 +92,68 @@ useEffect(() => {
 
   const handleEducationEditApi = async () => {
     try {
-      const updatedEducation = [
-        {
-          degree: "Bachelors in Computer Science",
-          school: "University of XYZ",
-          year: "2018-2022",
-        },
-        {
-          degree: "Masters in Web Development",
-          school: "University of ABC",
-          year: "2023-Present",
-        },
-      ];
-
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/Profile/editEducation`, {
-        education: updatedEducation,
-      });
-      console.log("Education updated successfully:", res);
-      setEducations(updatedEducation);
-      toast.success('Education updated successfully!');
+      const updatedDataEdu = {
+        institution , 
+        degree
+      };
+      const respon = await axios.put(
+        `${import.meta.env.VITE_API_URL}/Profile/editEducation`,
+        updatedDataEdu,
+        { withCredentials: true }
+      );
+      if (respon.status === 200) {
+        setIsEduModalOpen(false);
+        
+        // Update the local state with the response data
+        const { institution , degree } = respon.data;
+        setInstitution(institution)
+        setDegree(degree)
+        window.location.reload();
+        toast.success('Profile updated successfully!');
+      } else {
+        throw new Error('Failed to update profile');
+      }
     } catch (error) {
       console.error("Error updating education:", error);
       toast.error('Failed to update education. Please try again.');
     }
   };
 
-  const handleExperienceEdit = (index) => {
-    setEditingExperience(index);
-  };
 
 
 
-const handleExperienceSave = async (index) => {
+const handleExperienceSave = async () => {
   try {
-    const updatedExperiences = [...experiences];
-    const editedExperience = updatedExperiences[index];
+    const updatedDataExp = {
+      company,
+      experience_Year 
+    };
+
     
-    const response = await axios.patch(
+    const responexp = await axios.put(
       `${import.meta.env.VITE_API_URL}/Profile/editExperience`,
-      { experience: editedExperience },
+      updatedDataExp,
       { withCredentials: true }
     );
 
-    if (response.status === 200) {
-      setExperiences(updatedExperiences);
-      setEditingExperience(null);
-      
-      // Show success message as a popup
-      toast.success('Experience updated successfully!', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+    if (responexp.status === 200) {
+        setIsExpModalOpen(false);
+        
+        // Update the local state with the response data
+        const { company, experience_Year } = responexp.data;
+        setCompany(company)
+        setExperience_Year(experience_Year)
+        window.location.reload();
+        toast.success('Profile updated successfully!');
     } else {
       throw new Error('Failed to update experience');
     }
   } catch (error) {
     console.error("Error updating experience:", error);
-    toast.error('Failed to update experience. Please try again.', {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    toast.error('Failed to update experience. Please try again.');
   }
 };
 
-  const handleExperienceChange = (index, field, value) => {
-    const updatedExperiences = [...experiences];
-    updatedExperiences[index][field] = value;
-    setExperiences(updatedExperiences);
-  };
 
   return (
     <>
@@ -209,6 +206,7 @@ const handleExperienceSave = async (index) => {
           </div>
 
           {/* 3-Column Grid Layout */}
+          {whoIAm === 'jobseeker' ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 p-4">
             {/* First Column: Profile */}
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -235,79 +233,91 @@ const handleExperienceSave = async (index) => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               <div className="flex justify-between items-center ">
                 <h3 className="text-xl font-semibold">Education</h3>
-                <h3 onClick={handleEducationEditApi} className="text-sm cursor-pointer rounded-full p-1 hover:underline hover:scale-105 font-semibold">
+                <h3 onClick={() => setIsEduModalOpen(true)} className="text-sm cursor-pointer rounded-full p-1 hover:underline hover:scale-105 font-semibold">
                   Edit
                 </h3>
               </div>
 
-              <div className="mt-4">
-                {educations &&
-                  educations.map((edu, index) => (
-                    <div key={index} className="mb-4">
-                      <p className="font-medium">{edu.degree}</p>
-                      <p className="text-gray-600">
-                        {edu.school} - {edu.year}
-                      </p>
-                    </div>
-                  ))}
+              <div className="flex flex-col mt-4">
+                <div className="flex flex-row justify-center items-center">
+                  <div>
+                  <p>
+                  <strong>Institution:</strong>
+                </p>
+                  </div>
+              <div className="">
+              {institution.map((institut, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded"
+                >
+                  {institut}
+                </span>
+              ))}
+            </div>
+                </div>
+                <div className="flex flex-row justify-center items-center">
+                  <div>
+                  <p>
+                  <strong>Degree:</strong>
+                </p>
+                  </div>
+              <div className="">
+              {degree.map((deg, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded"
+                >
+                  {deg}
+                </span>
+              ))}
+            </div>
+                </div>
               </div>
             </div>
 
             {/* Third Column: Job Experience */}
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold">Experience</h3>
-              <div className="mt-4">
-                {experiences &&
-                  experiences.map((exp, index) => (
-                    <div key={index} className="mb-4">
-                      <p
-                        className="font-medium"
-                        contentEditable={editingExperience === index}
-                        onBlur={(e) => handleExperienceChange(index, 'position', e.target.textContent)}
-                        suppressContentEditableWarning={true}
-                      >
-                        {exp.position}
-                      </p>
-                      <p
-                        className="text-gray-600"
-                        contentEditable={editingExperience === index}
-                        onBlur={(e) => {
-                          const [company, year] = e.target.textContent.split(' - ');
-                          handleExperienceChange(index, 'company', company);
-                          handleExperienceChange(index, 'year', year);
-                        }}
-                        suppressContentEditableWarning={true}
-                      >
-                        {exp.company} - {exp.year}
-                      </p>
-                      <p
-                        className="text-gray-700"
-                        contentEditable={editingExperience === index}
-                        onBlur={(e) => handleExperienceChange(index, 'description', e.target.textContent)}
-                        suppressContentEditableWarning={true}
-                      >
-                        {exp.description}
-                      </p>
-                      {editingExperience === index ? (
-                        <button
-                          onClick={() => handleExperienceSave(index)}
-                          className="mt-2 text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleExperienceEdit(index)}
-                          className="mt-2 text-sm text-blue-500 hover:underline"
-                        >
-                          Edit
-                        </button>
-                      )}
-                    </div>
-                  ))}
+              <div className="flex justify-between items-center ">
+                <h3 className="text-xl font-semibold">Experience</h3>
+                <h3 onClick={() => setIsExpModalOpen(true)} className="text-sm cursor-pointer rounded-full p-1 hover:underline hover:scale-105 font-semibold">
+                  Edit
+                </h3>
+              </div>
+
+              <div className="flex flex-col mt-4">
+                <div className="flex flex-row justify-center items-center">
+                  <div>
+                  <p>
+                  <strong>Company:</strong>
+                </p>
+                  </div>
+              <div className="">
+              {company.map((comp, index) => (
+                <span
+                  key={index}
+                  className="inline-block bg-blue-100 text-blue-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded"
+                >
+                  {comp}
+                </span>
+              ))}
+            </div>
+                </div>
+                <div className="flex flex-row justify-center items-center">
+                  <div>
+                  <p>
+                  <strong>Experience_Year:</strong> {experience_Year}
+                </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          ) : (
+            <div></div>
+          )}
+
 
           {/* Modal Component */}
           <Modal
@@ -322,6 +332,29 @@ const handleExperienceSave = async (index) => {
             setBackgroundImage={setBackgroundImage}
             whoIAm={whoIAm}
             setWhoIAm={setWhoIAm}
+          />
+
+          
+          {/* Modal Component Education */}
+          <EduModal
+            isOpen={isModalEduOpen}
+            onClose={() => setIsEduModalOpen(false)}
+            onSave={handleEducationEditApi}
+            institution={institution}
+            setInstitution={setInstitution}
+            degree={degree}
+            setDegree={setDegree}
+          />
+
+            <ExpModal
+            isOpen={isModalExpOpen}
+            onClose={() => setIsExpModalOpen(false)}
+            onSave={handleExperienceSave}
+            company={company}
+            setCompany={setCompany}
+            experience_Year={experience_Year}
+            setExperience_Year={setExperience_Year}
+            
           />
         </div>
         <ToastContainer />

@@ -5,84 +5,36 @@ import NavBar from "../../LandingPage/NavBar";
 const CoursesPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
-  const [adminCourses, setAdminCourses] = useState([]); // state to hold admin created courses
+  const [adminCourses, setAdminCourses] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   const itCourses = [
-    // Static IT courses
-    {
-      name: "FULL STACK WEB DEVELOPMENT",
-      description: "Gain skills for front and backend.",
-    },
-    {
-      name: "DATA SCIENCE",
-      description: "Improving skills of Programming , Analytics ,AI and Machine Learning.",
-    },
-    {
-      name: "ARTIFICIAL INTELLIGENCE(AI)",
-      description: "Problem solving ,Decision making ,Creativity and Autonomy",
-    },
-    {
-      name: "MACHINE LEARNING",
-      description: "Master ML algorithms and techniques to build intelligent systems.",
-    },
-    {
-      name: "CLOUD COMPUTING",
-      description: "Learn to deploy and manage applications on the cloud.",
-    },
-    {
-      name: "CYBERSECURITY",
-      description: "Gain expertise in protecting networks and data from cyber threats.",
-    },
+    { name: "FULL STACK WEB DEVELOPMENT", description: "Gain skills for front and backend." },
+    { name: "DATA SCIENCE", description: "Improving skills of Programming , Analytics ,AI and Machine Learning." },
+    { name: "ARTIFICIAL INTELLIGENCE(AI)", description: "Problem solving ,Decision making ,Creativity and Autonomy" },
+    { name: "MACHINE LEARNING", description: "Master ML algorithms and techniques to build intelligent systems." },
+    { name: "CLOUD COMPUTING", description: "Learn to deploy and manage applications on the cloud." },
+    { name: "CYBERSECURITY", description: "Gain expertise in protecting networks and data from cyber threats." },
   ];
 
   const mbaCourses = [
-    // Static MBA courses
-    {
-      name: "DIGITAL MARKETING",
-      description: "The use of digital channels and technologies to promote products and services.",
-    },
-    {
-      name: "FINANCIAL RISER MANAGEMENT",
-      description: "Gain skills for stock market,and Trading.",
-    },
-    {
-      name: "BUSINESS ANALYTICS",
-      description: "Gain skills for data-driven business decisions.",
-    },
-    {
-      name: "HRM (HUMAN RESOURCES MANAGEMENT)",
-      description: "Gain skills for Coordinating,Managing,Allocating human capital and more...",
-    },
-    {
-      name: "PRODUCT MANAGEMENT",
-      description: "Improving skills of Planning,Developing,Launching,and Managing a product or Service.",
-    },
-    {
-      name: "FINANCIAL MODELLING",
-      description: "Developing financial models,Analyzing financial data,Presenting findings,Updating models and more...",
-    },
-    {
-      name: "CPA (CERTIFIED PUBLIC ACCOUNTANT)",
-      description: "Prepare,Organize and Analyze financial records.",
-    },
-    {
-      name: "PROJECT MANAGEMENT",
-      description: "Planning,Organizing,and Executing a project from start to finish.",
-    },
+    { name: "DIGITAL MARKETING", description: "The use of digital channels and technologies to promote products and services." },
+    { name: "FINANCIAL RISER MANAGEMENT", description: "Gain skills for stock market,and Trading." },
+    { name: "BUSINESS ANALYTICS", description: "Gain skills for data-driven business decisions." },
+    { name: "HRM (HUMAN RESOURCES MANAGEMENT)", description: "Coordinating,Managing,Allocating human capital and more..." },
+    { name: "PRODUCT MANAGEMENT", description: "Planning,Developing,Launching,and Managing a product or Service." },
+    { name: "FINANCIAL MODELLING", description: "Developing financial models,Analyzing financial data, and more..." },
+    { name: "CPA (CERTIFIED PUBLIC ACCOUNTANT)", description: "Prepare,Organize and Analyze financial records." },
+    { name: "PROJECT MANAGEMENT", description: "Planning,Organizing,and Executing a project from start to finish." },
   ];
 
-  // Fetch admin-created courses from the backend
   useEffect(() => {
     const fetchAdminCourses = async () => {
       try {
         const response = await fetch("http://localhost:5000/api/courses");
         const data = await response.json();
-
-        if (Array.isArray(data)) {
-          setAdminCourses(data);
-        } else {
-          console.error("Fetched data is not an array:", data);
-        }
+        if (Array.isArray(data)) setAdminCourses(data);
+        else console.error("Fetched data is not an array:", data);
       } catch (error) {
         console.error("Error fetching admin courses:", error);
       }
@@ -96,9 +48,16 @@ const CoursesPage = () => {
     setShowForm(true);
   };
 
-  const closeForm = () => {
-    setShowForm(false);
-  };
+  const closeForm = () => setShowForm(false);
+
+  const handleSearch = (e) => setSearchQuery(e.target.value.toLowerCase());
+
+  const filterCourses = (courses) =>
+    courses.filter(
+      (course) =>
+        course.name.toLowerCase().includes(searchQuery) ||
+        course.description.toLowerCase().includes(searchQuery)
+    );
 
   const renderCourseSection = (title, courses) => (
     <section className="mb-20">
@@ -136,18 +95,23 @@ const CoursesPage = () => {
       <div className="py-20 bg-gradient-to-b from-gray-900 via-red-900 to-black text-center">
         <div className="container mx-auto px-4">
           <h1 className="text-5xl font-bold text-white mb-16 shadow-text">Trending Courses</h1>
-          {renderCourseSection("IT Courses", itCourses)}
-          {renderCourseSection("MBA Courses", mbaCourses)}
-          {renderCourseSection("Latest Courses", adminCourses)} {/* Render admin-created courses here */}
+          {/* Search Bar */}
+          <div className="mb-10">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Search for courses..."
+              className="w-full max-w-md px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+            />
+          </div>
+          {renderCourseSection("IT Courses", filterCourses(itCourses))}
+          {renderCourseSection("MBA Courses", filterCourses(mbaCourses))}
+          {renderCourseSection("Latest Courses", filterCourses(adminCourses))}
         </div>
       </div>
 
-      {showForm && (
-        <ApplyForm
-          courseName={selectedCourse}
-          closeForm={closeForm}
-        />
-      )}
+      {showForm && <ApplyForm courseName={selectedCourse} closeForm={closeForm} />}
     </>
   );
 };

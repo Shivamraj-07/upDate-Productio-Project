@@ -9,15 +9,13 @@ import JobProfileSection from "./Pages/Profile";
 import LandingPage from "./Pages/LandingPage";
 import About from "./Pages/Aboutus";
 import Footersection from "./LandingPage/FooterSection";
-import CoursePage from "./Pages/CoursePage";
+
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-import Resume from "./Pages/Resume";
 
-import RT from "./Pages/RT";
 import NavBar from "./LandingPage/NavBar";
 // import { ShimmerCategoryItems } from "shimmer-effects-react";
 import PaymentSuccess from "./Pages/PaymentSucess";
@@ -43,8 +41,8 @@ const App = () => {
         <Routes>
         <Route path="/Course" element={<CoursesPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/template" element={<RT />} />
-          <Route path="/Courses" element={<CoursePage />} />
+          
+          
           <Route
             path="/home"
             element={
@@ -127,7 +125,7 @@ const App = () => {
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/Aboutus" element={<About />} />
           <Route path="/JobSection" element={<JobSection/>} />
-          <Route path="/resume" element={<Resume />} />
+          
           <Route path="*" element={<LandingPage />} /> {/* Default route */}
         </Routes>
       </Router>

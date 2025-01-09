@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 
 const ApplyForm = ({ courseName, closeForm }) => {
@@ -7,6 +7,25 @@ const ApplyForm = ({ courseName, closeForm }) => {
   const [mobile, setMobile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/Profile`,
+          { withCredentials: true }
+        );
+        const { name, email } = response.data;
+        setName(name);
+        setEmail(email);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Failed to fetch user data. Please try again.");
+      }
+    };
+
+    fetchUserData();
+  }, []);
   const handlePayment = async () => {
     const amount = 4444; // Price of the course
 
@@ -57,16 +76,16 @@ const ApplyForm = ({ courseName, closeForm }) => {
         </button>
         <h2 className="text-xl font-semibold mb-4">Apply for {courseName}</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Full Name
             </label>
             <input
-              type="text"
+              type="name"
               id="name"
               name="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              disabled
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -77,14 +96,12 @@ const ApplyForm = ({ courseName, closeForm }) => {
               Email Address
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md"
-              required
-            />
+                          id="email"
+                          type="email"
+                          value={email}
+                          disabled
+                          className="w-full p-2 border border-gray-300 rounded-md"
+                        />
           </div>
 
           <div className="mb-4">

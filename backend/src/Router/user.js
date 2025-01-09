@@ -14,8 +14,8 @@ const UserRouter = express.Router();
 
 UserRouter.get("/Profile/", IsAuthenticated, (req, res) => {
   try {
-    const { _id, name, ProfileURL, BgURL, WhoIAm, skills, email } = req.user;
-    res.json({ _id, name, skills, ProfileURL, WhoIAm, BgURL, email });
+    const { _id, name, ProfileURL, BgURL, WhoIAm, skills, email , institution , degree, company,experience_Year } = req.user;
+    res.json({ _id, name, skills, ProfileURL, WhoIAm, BgURL, email , institution , degree, company,experience_Year  });
   } catch (error) {
     res.send("something wne t wrong");
   }
@@ -37,17 +37,18 @@ UserRouter.get("/MarketPlace", IsAuthenticated, async (req, res) => {
 });
 
 
-UserRouter.patch("/Profile/edit", IsAuthenticated,async(req, res) => {
+
+UserRouter.put("/Profile/edit",IsAuthenticated ,async(req, res) => {
   try {
     const userUpdates = req.body;
-    const allowedUpdates = ["name", "skills", "ProfileURL", "BgURL","Education", "Experince"];
+    // const allowedUpdates = ["name", "skills", "ProfileURL", "BgURL","Education", "Experince"];
  
   
     // Check if all keys in the update are allowed
-    const isAllowed = Object.keys(userUpdates).every(key => allowedUpdates.includes(key));
-    if (!isAllowed) {
-      return res.status(400).json({ message: "Invalid update keys provided." });
-    }
+    // const isAllowed = Object.keys(userUpdates).every(key => allowedUpdates.includes(key));
+    // if (!isAllowed) {
+    //   return res.status(400).json({ message: "Invalid update keys provided." });
+    // }
   
     // Check if ProfileURL or BgURL size exceeds the allowed limit
   
@@ -59,14 +60,54 @@ UserRouter.patch("/Profile/edit", IsAuthenticated,async(req, res) => {
         runValidators: true,
       }
     );
-    return res.json("success")
+    return res.status(200).json({ message: 'Request was successful'})
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: "An error occurred while updating the profile." });
+    res.status(500).json({ message:"An error occurred while updating the profile." });
   }
-  
-  
     });
+
+    // Update eduction route
+UserRouter.put("/Profile/editEducation",IsAuthenticated ,async(req, res) => {
+  try {
+    const userEdUpdates = req.body;
+  
+    const updatedEduUser = await User.findByIdAndUpdate(
+      { _id: req.user._id },
+      userEdUpdates,
+      {
+        new: true, // Return the updated document
+        runValidators: true,
+      }
+    );
+    return res.status(200).json({ message: 'Request was successful'})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message:"An error occurred while updating the profile." });
+  }
+    });
+
+    // Update experience route 
+    UserRouter.put("Profile/editExperience",IsAuthenticated ,async(req, res) => {
+      try {
+        const userExpUpdates = req.body;
+      
+        const updatedExpUser = await User.findByIdAndUpdate(
+          { _id: req.user._id },
+          userExpUpdates,
+          {
+            new: true, // Return the updated document
+            runValidators: true,
+          }
+        );
+        return res.status(200).json({ message: 'Request was successful'})
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({ message:"An error occurred while updating the profile." });
+      }
+        });
+
+
   
 
 

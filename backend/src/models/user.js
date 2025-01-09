@@ -47,11 +47,23 @@ const userschema = mongoose.Schema(
       type: [String],
       default: ["html", "css"]
     },
-    
-    Education: {
-      type: [String]
+
+    institution: {
+      type: [String],
+      default: ["N/A" , "none"]
     },
-    
+    degree: {
+      type: [String],
+      default: ["N/A" , "none"]
+    },
+    company: {
+      type: [String],
+      default: ["N/A" , "none"]
+    },
+    experience_Year: {
+      type: String,
+      default: "0"
+    },
     status: { 
       type: String, 
       default: 'Active' 
@@ -61,10 +73,6 @@ const userschema = mongoose.Schema(
       type: Boolean, 
       default: false 
     },
-    
-    Experience: {
-      type: [String]
-    }
   },
   { timestamps: true }
 );
