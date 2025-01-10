@@ -32,6 +32,8 @@ import AdminPanel from './Pages/AdminPanel';
 import AdminLogin from "./Pages/AdminLogin";
 import AdminCoursesPage from "./components/Admin/AdminCoursesPage";
 import AdminUserPage from "./components/Admin/AdminUserPage";
+import RecruiterLanding from "./components/RecruiterLanding";
+
 
 
 
@@ -98,6 +100,10 @@ const App = () => {
 
 
 
+        
+<Route path="/recruiter" element={<RecruiterLanding/>} />
+
+
 
         
         <Route path="/career" element={<ComingSoon />} />
@@ -105,13 +111,13 @@ const App = () => {
       
       
    
+        <Route path="/privacypolicy" element={<PrivacyPolicy/>} />
 
 
 
-
-           <Route path="/Privacy Policy" element={<PrivacyPolicy />} />
+          
     
-
+     
 
           
          

@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import img from "../assets/banner-main.png";
 
 const WelcomeSection = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-  };
+  // const handleSearchChange = (e) => {
+  //   setSearchQuery(e.target.value);
+  // };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Search query:", searchQuery);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Search query:", searchQuery);
+  // };
 
   return (
     <main
@@ -35,7 +35,7 @@ const WelcomeSection = () => {
             Explore 1000+ job openings and find your dream job today.
           </p>
           <a
-            href="/login"
+            href="/JobSection"
             className="inline-block px-6 py-3 md:px-10 md:py-4 text-lg md:text-xl font-bold text-white bg-red-600 rounded-xl transition duration-300 hover:bg-red-700 hover:shadow-lg transform hover:-translate-y-1"
           >
             Explore Jobs
@@ -43,7 +43,7 @@ const WelcomeSection = () => {
         </div>
 
         {/* Search Bar */}
-        <div className="w-full max-w-xl flex justify-center items-center mt-8 md:mt-12">
+        {/* <div className="w-full max-w-xl flex justify-center items-center mt-8 md:mt-12">
           <form
             onSubmit={handleSubmit}
             className="flex w-full shadow-lg overflow-hidden justify-between items-center p-2 rounded-full bg-white"
@@ -62,7 +62,7 @@ const WelcomeSection = () => {
               <img src="search.svg" alt="search" className="w-4 h-4 md:w-6 md:h-6" />
             </button>
           </form>
-        </div>
+        </div> */}
       </section>
     </main>
   );

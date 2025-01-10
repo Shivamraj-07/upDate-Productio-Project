@@ -141,7 +141,7 @@ const JobRolesSection = () => {
                  </div>
                </div>
                <div className="text-center mt-12">
-                 <a href="/jobs" className="inline-block bg-white text-red-600 font-bold py-3 px-8 rounded-full hover:bg-red-100 transition duration-300">
+               <a href="/JobSection" className="inline-block bg-white text-red-600 font-bold py-3 px-8 rounded-full hover:bg-red-100 transition duration-300">
                    Explore Jobs
                  </a>
                </div>

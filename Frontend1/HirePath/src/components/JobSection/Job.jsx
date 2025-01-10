@@ -74,7 +74,7 @@ const JobSection = () => {
   return (
     <>
       <NavBar />
-      <div className="p-7 bg-gradient-to-r from-gray-900 to-black min-h-screen">
+      <div className="p-7 bg-gradient-to-r from-gray-900 to-black min-h-screen"> <br/><br/>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 text-center text-red-600">
           Job Listings
         </h2>

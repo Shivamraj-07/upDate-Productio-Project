@@ -37,7 +37,7 @@ const JobCategories = () => {
                 </p>
               </div>
               <div className="bg-red-600 px-6 py-3">
-                <a href="#" className="text-white text-sm font-medium hover:underline">
+                <a href="/JobSection" className="text-white text-sm font-medium hover:underline">
                   Explore Jobs &rarr;
                 </a>
               </div>

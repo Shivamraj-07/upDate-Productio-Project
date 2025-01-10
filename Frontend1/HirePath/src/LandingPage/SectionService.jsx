@@ -39,10 +39,10 @@ const SectionService = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { title: "Job Listings", icon: <FaBriefcase />, link: "/" },
-            { title: "Career Counseling", icon: <FaComments />, link: "/" },
+            { title: "Job Listings", icon: <FaBriefcase />, link: "/JobSection" },
+            { title: "Career Counseling", icon: <FaComments />, link: "/career" },
             { title: "Resume Building", icon: <FaFileAlt />, link: "/resume" },
-            { title: "Interview Prep", icon: <FaUserTie />, link: "/ComingSoon" },
+            { title: "Interview Prep", icon: <FaUserTie />, link: "/career" },
           ].map((service, index) => (
             <Link to={service.link} key={index}>
               <div
